@@ -11,12 +11,8 @@ module.exports =
     rs = db.createReadStream()
       .on 'data', (data) ->
         console.log 'data: ' + data.value
-        try
-          JSON.parse data.value
-          console.log "ok"
-        catch e
-          console.log "pas ok"
-          # body...
+        user = data.value
+
 
       .on 'error', callback
 
@@ -35,12 +31,14 @@ module.exports =
       name: name
       email: email
     ws.write
-      key: "key:#{username}:#{name}"
+      key: username
       value: user
       valueEncoding : 'json'
     ws.end()
 
   remove: (username, callback) ->
-    # TODO: delete a user by username
+    console.log "deleting user " + username
+    db.del username, callback
+
 
   # We won't do update
