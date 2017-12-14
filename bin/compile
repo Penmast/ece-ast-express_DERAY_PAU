@@ -17,22 +17,22 @@ compileStylus() {
   echo "nothing to do"
 }
 
-main() {  
-  case "$1" in 
+main() {
+  case "$1" in
   coffee)
     compileCoffee
     ;;
-    
+
   pug)
     compilePug
     ;;
-    
+
   stylus)
     compileStylus
     ;;
-    
-  *) 
-    if [[ ! -z "$1" ]]; then 
+
+  *)
+    if [[ ! -z "$1" ]]; then
       echo "Compiling everything"
       compileCoffee
       compilePug
