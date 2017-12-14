@@ -107,6 +107,13 @@ app.get '/user.json', (req, res) ->
       res.status(500).send()
     else res.status(200).json data
 
+app.delete '/user.json/:username', (req, res) ->
+  user.remove req.params.username, (err) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else res.status(200).send()
+
 app.get '/populate', (req, res) ->
   populate()
   res.redirect '/'
