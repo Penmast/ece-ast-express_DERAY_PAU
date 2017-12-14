@@ -38,7 +38,8 @@ app.set 'views', "#{__dirname}/../views"
 app.set 'view engine', 'pug'
 
 app.use bodyparser.json()
-app.use bodyparser.urlencoded()
+app.use bodyparser.urlencoded
+  extended: false
 
 #app.use logging_middleware
 
@@ -69,10 +70,11 @@ app.post '/metrics.json/:id', (req, res) ->
 app.get '/login', (req, res) ->
   res.render 'login'
 
-app.post 'login', (req, res) ->
+app.post '/login', (req, res) ->
+  console.log "login!"
   user.get req.body.username, (err, data) ->
     return next err if err
-    unless req.session.username == data.username
+    unless req.body.password == data.password
       res.redirect '/login'
     else
       req.session.loggedIn = true
@@ -98,14 +100,16 @@ app.post '/user.json', (req, res) ->
     if err
       console.log err
       res.status(500).send()
-    else res.status(200).send()
+    else
+      res.status(200).send()
 
 app.get '/user.json', (req, res) ->
-  user.get "john", (err, data) ->
+  user.get "1234", (err, data) ->
     if err
       console.log err
       res.status(500).send()
-    else res.status(200).json data
+    else
+      res.status(200).json data
 
 app.delete '/user.json/:username', (req, res) ->
   user.remove req.params.username, (err) ->

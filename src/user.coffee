@@ -5,18 +5,19 @@ db = levelws level "#{__dirname}/../db/user"
 
 module.exports =
   get: (username, callback) ->
+
     user = {}
-    #gte: "user:#{username}"
+    rs = db.createReadStream
+      gte: username
+      lte: username
+    rs.on 'data', (data) ->
+        value = JSON.parse data.value
+        user = value
 
-    rs = db.createReadStream()
-      .on 'data', (data) ->
-        console.log 'data: ' + data.value
-        user = data.value
 
+    rs.on 'error', callback
 
-      .on 'error', callback
-
-      .on 'close', ->
+    rs.on 'close', ->
         console.log 'closing'
         callback null, user
 
