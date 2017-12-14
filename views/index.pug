@@ -20,6 +20,7 @@ block content
       $('#show-metrics').click (e) ->
         e.preventDefault()
         $.getJSON "/metrics.json", {}, (data) ->
+          console.log "got metrics : #{data}"
           content = "<ul>"
           for d in data
             content += "<li>timestamp: #{d.timestamp}, value: #{d.value}</li>"
