@@ -3,6 +3,7 @@ bodyparser = require 'body-parser'
 
 metrics = require './metrics'
 user = require './user'
+usermetrics = require './usermetrics'
 app = express()
 morgan = require 'morgan' 
 
@@ -54,7 +55,7 @@ app.get '/hello/:name', (req, res) ->
   res.send "Hello #{req.params.name}"
 
 app.get '/metrics.json', (req, res) ->
-  metrics.get "1337", (err, data) ->
+  metrics.get "10000", (err, data) ->
     if err
       console.log err
       res.status(500).send()
@@ -117,6 +118,23 @@ app.delete '/user.json/:username', (req, res) ->
       console.log err
       res.status(500).send()
     else res.status(200).send()
+
+app.post '/usermetrics.json', (req, res) ->
+  usermetrics.save req.body.username, req.body.id, (err) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else
+      res.status(200).send()
+
+app.get '/usermetrics.json', (req, res) ->
+  usermetrics.get "1234", "1337", (err, data) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else
+      res.status(200).json data
+
 
 app.get '/populate', (req, res) ->
   populate()
