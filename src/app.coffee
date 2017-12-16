@@ -54,8 +54,16 @@ app.get '/', (req, res) ->
 app.get '/hello/:name', (req, res) ->
   res.send "Hello #{req.params.name}"
 
-app.get '/metrics.json', (req, res) ->
-  metrics.get "10000", (err, data) ->
+###app.get '/metrics.json', (req, res) ->
+  metrics.get (err, data) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else res.status(200).json data
+    ###
+
+app.get '/metrics.json/:id', (req, res) ->
+  metrics.get req.params.id, (err, data) ->
     if err
       console.log err
       res.status(500).send()
@@ -128,7 +136,9 @@ app.post '/usermetrics.json', (req, res) ->
       res.status(200).send()
 
 app.get '/usermetrics.json', (req, res) ->
-  usermetrics.get "1234", "1337", (err, data) ->
+  if req.session.username == undefined then session_user = "1234"
+  else session_user = req.session.username
+  usermetrics.get session_user, (err, data) ->
     if err
       console.log err
       res.status(500).send()

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Web Page</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- Here will go our css/js links-->
+    <script type="text/javascript" src="/js/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="/js/index.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="col-md-6 col-md-offset-3">
+        <p></p>
+        <button class="btn btn-success" id="show-metrics" type="button">Bring the metrics</button>
+        <div id="metrics"></div>
+      </div>
+      <button class="btn btn-danger" href="/logout" onClick="document.location.href=&quot;/logout&quot;">Logout</button>
+      <div></div>
+    </div>
+    <script>
+       (function() {
+  $('#show-metrics').click(function(e) {
+    e.preventDefault();
+    return $.getJSON("/usermetrics.json", {}, function(data) {
+      var d, i, len, results;
+      results = [];
+      for (i = 0, len = data.length; i < len; i++) {
+        d = data[i];
+        results.push($.getJSON("/metrica/" + d.id, {}, function(dataMetrics) {
+          var content, dm, j, len1, results1;
+          console.log("got metrics : " + dataMetrics);
+          content = "<ul>";
+          results1 = [];
+          for (j = 0, len1 = dataMetrics.length; j < len1; j++) {
+            dm = dataMetrics[j];
+            content += "<li>timestamp: " + dm.timestamp + ", value: " + dm.value + "</li>";
+            content += "</ul>";
+            results1.push($('#metrics').append(content));
+          }
+          return results1;
+        }));
+      }
+      return results;
+    });
+
+    /*$.getJSON "/metrics.json", {}, (data) ->
+    console.log "got metrics : #{data}"
+    content = "<ul>"
+    for d in data
+      content += "<li>timestamp: #{d.timestamp}, value: #{d.value}</li>"
+      content += "</ul>"
+      $('#metrics').append content
+     */
+  });
+
+}).call(this);
+
+    </script>
+  </body>
+</html>

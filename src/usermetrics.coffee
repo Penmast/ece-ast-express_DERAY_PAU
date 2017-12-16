@@ -7,7 +7,7 @@ db = levelws level "#{__dirname}/../db/usermetrics"
 
 module.exports =
   get: (username, id, callback) ->
-    userid = {}
+    userid = []
     if callback == undefined
       callback = id
       id = null
@@ -24,7 +24,7 @@ module.exports =
     rs.on 'data', (data) ->
         value = JSON.parse data.value
         console.log value
-        userid = value
+        userid.push value
 
 
     rs.on 'error', callback

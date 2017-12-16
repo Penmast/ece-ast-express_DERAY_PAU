@@ -15,15 +15,27 @@ block content
       button#show-metrics(type="button" class="btn btn-success") Bring the metrics
       #metrics
     button.btn.btn-danger(href='/logout' onClick='document.location.href="/logout"') Logout
+    div
+    
       
   script 
     :coffee-script
-      $('#show-metrics').click (e) ->
+      $('#show-metrics').click (e) ->      
         e.preventDefault()
-        $.getJSON "/metrics.json", {}, (data) ->
-          console.log "got metrics : #{data}"
-          content = "<ul>"
+        $.getJSON "/usermetrics.json", {}, (data) ->
           for d in data
-            content += "<li>timestamp: #{d.timestamp}, value: #{d.value}</li>"
+            $.getJSON "/metrics.json/#{d.id}", {}, (dataMetrics) ->
+              console.log "got metrics : #{dataMetrics}"
+              content = "<ul>"
+              for dm in dataMetrics
+                content += "<li>timestamp: #{dm.timestamp}, value: #{dm.value}</li>"
+              content += "</ul>"
+              $('#metrics').append content
+          
+        ###$.getJSON "/metrics.json", {}, (data) ->
+        console.log "got metrics : #{data}"
+        content = "<ul>"
+        for d in data
+          content += "<li>timestamp: #{d.timestamp}, value: #{d.value}</li>"
           content += "</ul>"
-          $('#metrics').append content
+          $('#metrics').append content###

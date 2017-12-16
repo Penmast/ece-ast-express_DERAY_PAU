@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AST - Logs</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <script type="text/javascript" src="/js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Logs</h1>
+      <div id="content"></div>
+      <script>(function() {
+  var socket;
+
+  socket = io.connect('http://localhost:8888');
+
+  sockets.on('logs', function(data) {
+    return $('#content').append(data.username + " loaded " + data.url);
+  });
+
+}).call(this);
+
+      </script>
+    </div>
+  </body>
+</html>
