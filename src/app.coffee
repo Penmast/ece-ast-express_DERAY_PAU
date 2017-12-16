@@ -47,12 +47,12 @@ app.use bodyparser.urlencoded
 
 app.use '/', express.static "#{__dirname}/../public"
 
-app.get '/', (req, res) ->
+###app.get '/', (req, res) ->
   res.render 'index',
     text: "Hello world !"
 
 app.get '/hello/:name', (req, res) ->
-  res.send "Hello #{req.params.name}"
+  res.send "Hello #{req.params.name}"###
 
 ###app.get '/metrics.json', (req, res) ->
   metrics.get (err, data) ->
