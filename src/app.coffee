@@ -80,7 +80,6 @@ app.get '/login', (req, res) ->
   res.render 'login'
 
 app.post '/login', (req, res) ->
-  console.log "login!"
   user.get req.body.username, (err, data) ->
     return next err if err
     unless req.body.password == data.password
@@ -113,7 +112,7 @@ app.post '/user.json', (req, res) ->
       res.status(200).send()
 
 app.get '/user.json', (req, res) ->
-  user.get "1234", (err, data) ->
+  user.get "newmember", (err, data) ->
     if err
       console.log err
       res.status(500).send()
@@ -127,7 +126,15 @@ app.delete '/user.json/:username', (req, res) ->
       res.status(500).send()
     else res.status(200).send()
 
-app.post '/usermetrics.json', (req, res) ->
+app.post '/usermetrics.json/:id', (req, res) ->
+  usermetrics.save req.session.username, req.params.id, (err) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else
+      res.status(200).send()
+
+app.post '/usermetrics.json/', (req, res) ->
   usermetrics.save req.body.username, req.body.id, (err) ->
     if err
       console.log err
@@ -136,8 +143,7 @@ app.post '/usermetrics.json', (req, res) ->
       res.status(200).send()
 
 app.get '/usermetrics.json', (req, res) ->
-  if req.session.username == undefined then session_user = "1234"
-  else session_user = req.session.username
+  session_user = req.session.username
   usermetrics.get session_user, (err, data) ->
     if err
       console.log err
@@ -145,6 +151,16 @@ app.get '/usermetrics.json', (req, res) ->
     else
       res.status(200).json data
 
+app.get '/signup', (req, res) ->
+  res.render 'signup'
+
+app.post '/signup', (req, res) ->
+  user.save req.body.username, req.body.password, req.body.name, req.body.email, (err) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else
+      res.redirect '/login'
 
 app.get '/populate', (req, res) ->
   populate()

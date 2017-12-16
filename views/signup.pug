@@ -1,0 +1,18 @@
+hr
+form#login(action='/signup', method="post")
+  .form-group
+    label Username
+    input(type='text', name="username")
+  .form-group
+    label Password
+    input(type='password', name="password")
+  .form-group
+    label Name
+    input(type='text', name="name")
+  .form-group
+    label Email
+    input(type='email', name="email")
+  button#login_submit.btn.btn-primary.btn-block(type='submit')
+    i.icon-ok.icon-white
+    |  Connect
+  hr
