@@ -8,7 +8,6 @@ describe 'user', () ->
       done()
 
   it 'deletes properly', (done) ->
-    user.save "username", "password", "name", "email"
     user.remove 'username', (err) ->
       should.not.exist err
       done()
