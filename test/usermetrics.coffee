@@ -8,7 +8,7 @@ describe 'usermetrics', () ->
       done()
 
   it 'deletes properly', (done) ->
-    usermetrics.remove 'username', (err) ->
+    usermetrics.remove 'username', 66, (err) ->
       should.not.exist err
       done()
 
