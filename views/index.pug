@@ -76,8 +76,17 @@ block content
               0
               Math.max.apply(Math,vArray)
             ])
-          xAxis = d3.axisBottom(xRange)
-            .tickValues(tArray.sort())
+          if tArray.length > 8 && tArray.length < 16
+            xAxis = d3.axisBottom(xRange)
+              .tickValues(xRange.domain().filter((d,i) -> return !(i%2)))
+          else
+            if tArray.length > 16
+              xAxis = d3.axisBottom(xRange)
+                .tickValues(xRange.domain().filter((d,i) -> return !(i%4)))
+            else
+              xAxis = d3.axisBottom(xRange)
+                .tickValues(tArray.sort())
+                
           yAxis = d3.axisLeft(yRange)
             .tickValues(vArray.sort())
 
