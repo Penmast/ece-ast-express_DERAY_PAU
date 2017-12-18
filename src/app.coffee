@@ -76,6 +76,15 @@ app.post '/metrics.json/:id', (req, res) ->
       res.status(500).send()
     else res.status(200).send()
 
+app.delete '/metrics.json/:id', (req, res) ->
+  metrics.get req.params.id, (err, data) ->
+    for d in data
+      metrics.remove "metrics:#{req.params.id}:#{d.timestamp}", (err) ->
+        if err
+          console.log err
+          res.status(500).send()
+        else res.status(200).send()
+
 app.get '/login', (req, res) ->
   res.render 'login'
 
@@ -150,6 +159,13 @@ app.get '/usermetrics.json', (req, res) ->
       res.status(500).send()
     else
       res.status(200).json data
+
+app.delete '/usermetrics.json', (req, res) ->
+  usermetrics.remove req.body.username, req.body.id, (err) ->
+    if err
+      console.log err
+      res.status(500).send()
+    else res.status(200).send()
 
 app.get '/signup', (req, res) ->
   res.render 'signup'

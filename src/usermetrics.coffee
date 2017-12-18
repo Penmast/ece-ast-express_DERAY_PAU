@@ -46,6 +46,8 @@ module.exports =
     ws.end()
 
 
-  remove: (username, callback) ->
+  remove: (username, id, callback) ->
+    console.log "deleting usermetric #{username}:#{id}"
+    db.del "userid:#{username}:#{id}", callback
 
   # We won't do update

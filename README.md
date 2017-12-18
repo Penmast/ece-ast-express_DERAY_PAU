@@ -4,11 +4,9 @@
 A simple user/data project.
 
 ## Installation instructions
-
 Just clone it from github & run `npm install`
 
 ## Run
-
 Use `nodemon src/app.coffee` or `npm start` or `bin/start`
 
 ## Data insertion
@@ -58,9 +56,25 @@ The data sent should be arranged this way:
 }
 ```
 
+## Data deletion
+
+### Metrics
+Send a DELETE request to `localhost:8888/metrics.json/[ID]`
+
+### User
+Send a DELETE request to `localhost:8888/user.json/[USERNAME]`
+
+### User/metrics links
+Send a DELETE request to `localhost:8888/usermetrics.json`
+The data sent should be arranged this way:
+```
+{
+	"username" : "x",
+	"id" : "y"
+}
+```
 
 ## Tests
-
 Use `npm test` or `./bin/test`
 
 ## Contributors
