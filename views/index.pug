@@ -112,7 +112,7 @@ block content
               d3.select(this)
                 .attr 'fill', '#60739b'
                 tooltipDiv.transition().duration(200).style('opacity', 0.9)
-                tooltipDiv.html 'Value:' + d.value + ' -  Timestamp:' + d.timestamp
+                tooltipDiv.html 'Value:' + d.value + ' -  Timestamp:' + new Date(parseInt(d.timestamp, 10)).toString()
             .on 'mouseout',(d) ->
               d3.select(this)
                 .attr 'fill', '#8e9196'
