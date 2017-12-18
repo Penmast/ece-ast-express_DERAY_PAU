@@ -3,7 +3,7 @@ user = require '../src/user.coffee'
 
 describe 'user', () ->
   it 'saves properly', (done) ->
-    user.save "ok",  "pwd", (err) ->
+    user.save "username", "password", "name", "email", (err) ->
       should.not.exist err
       done()
 
@@ -12,6 +12,12 @@ describe 'user', () ->
       should.exist err
       done()
 
-  it 'get', (done) ->
-    # do something
-    done()
+  it 'doesn\'t delete because missing parameter', (done) ->
+    user.remove (err) ->
+      should.exist err
+      done()
+
+  it 'gets a existing user', (done) ->
+    user.get 'user1', (err) ->
+      should.not.exist err
+      done()
