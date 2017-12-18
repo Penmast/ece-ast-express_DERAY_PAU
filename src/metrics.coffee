@@ -45,3 +45,6 @@ module.exports =
         key: "metrics:#{id}:#{timestamp}"
         value: value
     ws.end()
+
+  remove: (key, callback) ->
+    db.del key, callback
