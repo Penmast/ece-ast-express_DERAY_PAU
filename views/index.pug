@@ -38,6 +38,7 @@ block content
               console.log "got metrics : #{dataMetrics}"
               content = "<ul>"
               for dm in dataMetrics
+                dm.id = d.id
                 dataArray.push dm
                 tArray.push dm.timestamp
                 vArray.push dm.value
@@ -103,7 +104,7 @@ block content
               d3.select(this)
                 .attr 'fill', '#60739b'
                 tooltipDiv.transition().duration(200).style('opacity', 0.9)
-                tooltipDiv.html 'Value:' + d.value + '<br/>Timestamp:' + d.timestamp
+                tooltipDiv.html 'ID:' + d.id + ' -  Value:' + d.value + ' -  Timestamp:' + d.timestamp
             .on 'mouseout',(d) ->
               d3.select(this)
                 .attr 'fill', '#8e9196'
