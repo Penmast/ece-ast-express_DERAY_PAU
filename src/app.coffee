@@ -168,13 +168,65 @@ app.get '/populate', (req, res) ->
 
 populate = () ->
 
-  metrics.save "1337", [
-    timestamp:(new Date '2015-11-04 14:00 UTC').getTime(), value:45
+  metrics.save "1", [
+    timestamp:(new Date '2015-11-04 14:00 UTC').getTime(), value:30
   ,
-    timestamp:(new Date '2015-11-04 14:10 UTC').getTime(), value:46
+    timestamp:(new Date '2015-11-04 14:10 UTC').getTime(), value:35
   ], (err) ->
     throw err if err
-    console.log "population terminated !"
+
+  metrics.save "2", [
+    timestamp:(new Date '2016-11-06 11:00 UTC').getTime(), value:20
+  ,
+    timestamp:(new Date '2017-11-06 14:10 UTC').getTime(), value:21
+  ], (err) ->
+    throw err if err
+
+  metrics.save "5", [
+    timestamp:(new Date '2015-11-04 14:00 UTC').getTime(), value:5
+  ,
+    timestamp:(new Date '2015-11-04 14:10 UTC').getTime(), value:55
+  ], (err) ->
+    throw err if err
+
+  metrics.save "8", [
+    timestamp:(new Date '2015-05-04 14:00 UTC').getTime(), value:1
+  ,
+    timestamp:(new Date '2015-06-04 14:10 UTC').getTime(), value:2
+  ], (err) ->
+    throw err if err
+
+  metrics.save "10", [
+    timestamp:(new Date '2017-11-04 14:00 UTC').getTime(), value:99
+  ,
+    timestamp:(new Date '2017-11-04 14:10 UTC').getTime(), value:99
+  ], (err) ->
+    throw err if err
+
+  user.save "user1", "password1", "John", "john@gmail.com", (err) ->
+    throw err if err
+
+  user.save "user2", "password2", "Max", "max@gmail.com", (err) ->
+    throw err if err
+
+  user.save "user3", "password3", "Alice", "alice@gmail.com", (err) ->
+    throw err if err
+
+  usermetrics.save "user1", "1", (err) ->
+    throw err if err
+
+  usermetrics.save "user1", "2", (err) ->
+    throw err if err
+
+  usermetrics.save "user1", "5", (err) ->
+    throw err if err
+
+  usermetrics.save "user2", "8", (err) ->
+    throw err if err
+
+  usermetrics.save "user2", "10", (err) ->
+    throw err if err
+
 
 server.listen app.get('port'), () ->
   console.log "Server listening on #{app.get 'port'} !"
