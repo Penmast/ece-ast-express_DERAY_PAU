@@ -13,6 +13,11 @@ Use `nodemon src/app.coffee` or `npm start` or `bin/start`
 
 ## Data insertion
 
+### Inserting pre-made data
+To insert pre-made data containing a set of users with their own metrics, two ways are availaible:
+1. Run `bin/populate`
+2. Through the URL `http://localhost:8888/populate`
+
 ### Metrics
 Send JSON data to `localhost:8888/metrics.json/[ID]`
 The data sent should be arranged this way:
