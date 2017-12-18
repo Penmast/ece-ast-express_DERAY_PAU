@@ -32,22 +32,18 @@ block content
         selector: '[data-toggle=tooltip]'
       });
       $('#show-metrics').click (e) ->      
-        e.preventDefault()
+        e.preventDefault()          
+        $('#chartcontainer').html ""
         dataArray = []
         vArray = []
         tArray = []
         $.getJSON "/usermetrics.json", {}, (data) ->       
           for d in data
             $.getJSON "/metrics.json/#{d.id}", {}, (dataMetrics) ->
-              console.log "got metrics : #{dataMetrics}"
-              content = "<ul>"
               for dm in dataMetrics
                 dataArray.push dm
                 tArray.push dm.timestamp
                 vArray.push dm.value
-                content += "<li>timestamp: #{dm.timestamp}, value: #{dm.value}</li>"
-              content += "</ul>"
-              $('#metrics').append content
         
         setTimeout ->
           chart = d3.select '#chartcontainer'
