@@ -10,7 +10,7 @@ describe 'user', () ->
   it 'deletes properly', (done) ->
     user.save "username", "password", "name", "email"
     user.remove 'username', (err) ->
-      should.exist err
+      should.not.exist err
       done()
 
   it 'gets a existing user', (done) ->
