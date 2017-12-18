@@ -38,7 +38,6 @@ block content
               console.log "got metrics : #{dataMetrics}"
               content = "<ul>"
               for dm in dataMetrics
-                dm.id = d.id
                 dataArray.push dm
                 tArray.push dm.timestamp
                 vArray.push dm.value
@@ -49,7 +48,7 @@ block content
         setTimeout ->
           chart = d3.select '#metrics'
             .append 'svg'
-            .attr 'width', 500
+            .attr 'width', 600
             .attr 'height', 500
             .attr 'id', 'chart'
             .attr 'class', 'col-sm-10'
@@ -60,21 +59,22 @@ block content
             bottom: 20,
             left: 50
           }
+        
+          HEIGHT = 500
+          WIDTH = 600
           
           xRange = d3.scaleBand().range([
               MARGINS.left
-              500 - (MARGINS.right)
+              WIDTH - (MARGINS.right)
             ], 1).paddingInner(0.2).domain(dataArray.map (d) ->
                 return d.timestamp
               )
           yRange = d3.scaleLinear().range([
-              500 - (MARGINS.top)
-              MARGINS.bottom
+              480
+              20
             ]).domain([
               0
-              d3.max(dataArray, (d) ->
-                return d.value
-              )
+              Math.max.apply(Math,vArray)
             ])
           xAxis = d3.axisBottom(xRange)
             .tickValues(tArray.sort())
@@ -96,7 +96,7 @@ block content
               return yRange(d.value)
             .attr 'width', xRange.bandwidth()
             .attr 'height', (d) ->
-              return ((500-20) - yRange(d.value))
+              return (480 - yRange(d.value))
             .attr 'fill', '#8e9196'
             .attr 'title', (d) ->
               return 'Value:' + d.value + ' Timestamp:' + d.timestamp
@@ -104,7 +104,7 @@ block content
               d3.select(this)
                 .attr 'fill', '#60739b'
                 tooltipDiv.transition().duration(200).style('opacity', 0.9)
-                tooltipDiv.html 'ID:' + d.id + ' -  Value:' + d.value + ' -  Timestamp:' + d.timestamp
+                tooltipDiv.html 'Value:' + d.value + ' -  Timestamp:' + d.timestamp
             .on 'mouseout',(d) ->
               d3.select(this)
                 .attr 'fill', '#8e9196'
