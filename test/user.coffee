@@ -8,12 +8,12 @@ describe 'user', () ->
       done()
 
   it 'doesn\'t save because missing parameter', (done) ->
-    user.save "only name", (err) ->
+    user.save "name", (err) ->
       should.exist err
       done()
 
-  it 'doesn\'t delete because missing parameter', (done) ->
-    user.remove (err) ->
+  it 'deletes properly', (done) ->
+    user.remove 'username', (err) ->
       should.exist err
       done()
 

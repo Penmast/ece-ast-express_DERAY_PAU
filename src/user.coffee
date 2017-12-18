@@ -22,21 +22,23 @@ module.exports =
         callback null, user
 
   save: (username, password, name, email, callback) ->
-    ws = db.createWriteStream()
-    ws.on 'error', callback
-    ws.on 'close', callback
-    console.log username + " " + password + " " + name + " " + email
-    user =
-      username: username
-      password: password
-      name: name
-      email: email
-    ws.write
-      key: username
-      value: user
-      valueEncoding : 'json'
-    ws.end()
-
+    if username != null and password != null and email !=null
+      ws = db.createWriteStream()
+      ws.on 'error', callback
+      ws.on 'close', callback
+      console.log username + " " + password + " " + name + " " + email
+      user =
+        username: username
+        password: password
+        name: name
+        email: email
+      ws.write
+        key: username
+        value: user
+        valueEncoding : 'json'
+      ws.end()
+    else
+      callback new Error 'missing parameters'
   remove: (username, callback) ->
     console.log "deleting user " + username
     db.del username, callback
