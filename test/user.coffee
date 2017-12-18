@@ -7,12 +7,8 @@ describe 'user', () ->
       should.not.exist err
       done()
 
-  it 'doesn\'t save because missing parameter', (done) ->
-    user.save "name", (err) ->
-      should.exist err
-      done()
-
   it 'deletes properly', (done) ->
+    user.save "username", "password", "name", "email"
     user.remove 'username', (err) ->
       should.exist err
       done()
