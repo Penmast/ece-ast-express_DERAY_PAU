@@ -1,5 +1,6 @@
-{exec} = require 'child_process'
+#{exec} = require 'child_process'
 should = require 'should'
+metrics = require '../src/metrics.coffee'
 
 describe "metrics", () ->
 
