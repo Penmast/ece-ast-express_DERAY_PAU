@@ -13,7 +13,7 @@ Use `nodemon src/app.coffee` or `npm start` or `bin/start`
 
 ## Data insertion
 
-###Metrics
+### Metrics
 Send JSON data to `localhost:8888/metrics.json/[ID]`
 The data sent should be arranged this way:
 ```
@@ -30,7 +30,7 @@ The data sent should be arranged this way:
 }]
 ```
 
-###User
+### User
 You can create a new user via the webpage by clicking on the "Create an account button" or through the URL `http://localhost:8888/signup`
 You can also send data to `localhost:8888/user.json`
 The data sent should be arranged this way:
@@ -43,7 +43,7 @@ The data sent should be arranged this way:
 }
 ```
 
-###Linking metrics to users
+### Linking metrics to users
 To link a metric to an user, send data to `localhost:8888/usermetrics.json/`
 The data sent should be arranged this way:
 ```
