@@ -5,7 +5,7 @@
   "scripts": {
     "start": "./bin/start",
     "compile": "./bin/compile",
-    "test": "./bin/test tests/*"
+    "test": "./bin/test test/*"
   },
   "author": "cesar berezowski",
   "license": "ISC",
