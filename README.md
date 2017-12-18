@@ -9,15 +9,22 @@ Just clone it from github & run `npm install`
 ## Run
 Use `nodemon src/app.coffee` or `npm start` or `bin/start`
 
-## Data insertion
+## Working with pre-made data
 
-### Inserting pre-made data
-To insert pre-made data containing a set of users with their own metrics, two ways are availaible:
+### Inserting the pre-made data
+To insert pre-made data containing a set of users with their own metrics, two ways are available:
 1. Run `bin/populate`
 2. Through the URL `http://localhost:8888/populate`
 
+### User logins
+1. Username:`user1` | Password:`password1`
+2. Username:`user2` | Password:`password2`
+3. Username:`user3` | Password:`password3`
+
+## Data insertion
+
 ### Metrics
-Send JSON data to `localhost:8888/metrics.json/[ID]`
+Send JSON data to `localhost:8888/metrics.json/[ID]`  
 The data sent should be arranged this way:
 ```
 [{
@@ -34,8 +41,8 @@ The data sent should be arranged this way:
 ```
 
 ### User
-You can create a new user via the webpage by clicking on the "Create an account button" or through the URL `http://localhost:8888/signup`
-You can also send data to `localhost:8888/user.json`
+You can create a new user via the webpage by clicking on the "Create an account button" or through the URL `http://localhost:8888/signup`  
+You can also send data to `localhost:8888/user.json`  
 The data sent should be arranged this way:
 ```
 {
@@ -47,7 +54,7 @@ The data sent should be arranged this way:
 ```
 
 ### Linking metrics to users
-To link a metric to an user, send data to `localhost:8888/usermetrics.json/`
+To link a metric to an user, send data to `localhost:8888/usermetrics.json/`  
 The data sent should be arranged this way:
 ```
 {
@@ -65,7 +72,7 @@ Send a DELETE request to `localhost:8888/metrics.json/[ID]`
 Send a DELETE request to `localhost:8888/user.json/[USERNAME]`
 
 ### User/metrics links
-Send a DELETE request to `localhost:8888/usermetrics.json`
+Send a DELETE request to `localhost:8888/usermetrics.json`  
 The data sent should be arranged this way:
 ```
 {
@@ -79,7 +86,7 @@ Use `npm test` or `./bin/test`
 
 ## Contributors
 
-David Deray
+David Deray  
 Mégane Pau
 
 ## License
