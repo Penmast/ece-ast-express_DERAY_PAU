@@ -6,8 +6,15 @@
   z-index: 1151 !important;
 }
 
+#metrics{
+  position: relative;
+}
+
 div.tooltip {
   width: 600px
+  position: absolute;
+  top: 0;
+  left: 120%;
   padding: 2px;
   font: 12px sans-serif;
   text-align: center;
