@@ -2,3 +2,13 @@
   width: 600px;
   height: 500px;
 }
+.tooltip{
+  z-index: 1151 !important;
+}
+
+div.tooltip {
+  width: 600px;
+  padding: 2px;
+  font: 12px sans-serif;
+  text-align: center;
+}

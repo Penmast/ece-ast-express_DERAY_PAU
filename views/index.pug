@@ -14,10 +14,10 @@ block head
 
 block content  
   div.container
-    div.col-md-6.col-md-offset-3
+    div.col-md-6.col-md-offset-3.container
       p #{text}
       button#show-metrics(type="button" class="btn btn-success") Bring the metrics
-      #metrics
+      #metrics.row
     button.btn.btn-danger(href='/logout' onClick='document.location.href="/logout"') Logout
     div
     
@@ -51,6 +51,7 @@ block content
             .attr 'width', 500
             .attr 'height', 500
             .attr 'id', 'chart'
+            .attr 'class', 'col-sm-10'
             
           MARGINS = {
             top: 20,
@@ -81,7 +82,9 @@ block content
 
           chart.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,480)').call(xAxis)
           chart.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(50,0)').call(yAxis)
-        
+          tooltipDiv = d3.select("#metrics").append("div")   
+            .attr("class", "tooltip col-sm-2")               
+            .style("opacity", 0);
           chart.selectAll('rect')
             .data(dataArray)
             .enter()
@@ -94,20 +97,19 @@ block content
             .attr 'height', (d) ->
               return ((500-20) - yRange(d.value))
             .attr 'fill', '#8e9196'
-            .attr 'data-toggle', 'tooltip'
-            .attr 'data-selector', 'true'
-            .attr 'data-placement', 'auto'
             .attr 'title', (d) ->
-              return 'Value:'+d.value+'\nTimestamp:'+d.timestamp
+              return 'Value:' + d.value + ' Timestamp:' + d.timestamp
             .on 'mouseover', (d) ->
               d3.select(this)
                 .attr 'fill', '#60739b'
-                $(this).attr('data-original-title', $(this).attr('title'))
-                $(this).tooltip()
+                tooltipDiv.transition().duration(200).style('opacity', 0.9)
+                tooltipDiv.html 'Value:' + d.value + '<br/>Timestamp:' + d.timestamp
             .on 'mouseout',(d) ->
               d3.select(this)
                 .attr 'fill', '#8e9196'
-              
+                tooltipDiv.transition()
+                  .duration 2000
+                  .style 'opacity', 0
         , 1000
         
         ###$.getJSON "/metrics.json", {}, (data) ->
