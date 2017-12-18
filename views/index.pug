@@ -5,8 +5,10 @@ block head
   script(type="text/javascript" src="/js/jquery-3.2.1.min.js" charset="utf-8")
   script(type="text/javascript" src="/js/bootstrap.min.js" charset="utf-8")
   script(type="text/javascript" src="/js/index.js" charset="utf-8")
+  script(type="text/javascript" src='https://d3js.org/d3.v4.min.js')
   link(rel='stylesheet', href='/css/bootstrap.min.css')
   link(rel='stylesheet', href='/css/bootstrap-theme.min.css')
+  link(rel='stylesheet', href='/css/main.css')
 
 block content  
   div.container
@@ -22,16 +24,75 @@ block content
     :coffee-script
       $('#show-metrics').click (e) ->      
         e.preventDefault()
-        $.getJSON "/usermetrics.json", {}, (data) ->
+        dataArray = []
+        vArray = []
+        tArray = []
+        $.getJSON "/usermetrics.json", {}, (data) ->       
           for d in data
             $.getJSON "/metrics.json/#{d.id}", {}, (dataMetrics) ->
               console.log "got metrics : #{dataMetrics}"
               content = "<ul>"
               for dm in dataMetrics
+                dataArray.push dm
+                tArray.push dm.timestamp
+                vArray.push dm.value
                 content += "<li>timestamp: #{dm.timestamp}, value: #{dm.value}</li>"
               content += "</ul>"
               $('#metrics').append content
+        
+        setTimeout ->
+          chart = d3.select '#metrics'
+            .append 'svg'
+            .attr 'width', 500
+            .attr 'height', 500
+            .attr 'id', 'chart'
+            
+          MARGINS = {
+            top: 20,
+            right: 20,
+            bottom: 20,
+            left: 50
+          }
           
+          xRange = d3.scaleBand().range([
+              MARGINS.left
+              500 - (MARGINS.right)
+            ], 1).paddingInner(0.2).domain(dataArray.map (d) ->
+                return d.timestamp
+              )
+          yRange = d3.scaleLinear().range([
+              500 - (MARGINS.top)
+              MARGINS.bottom
+            ]).domain([
+              0
+              d3.max(dataArray, (d) ->
+                return d.value
+              )
+            ])
+          xAxis = d3.axisBottom(xRange)
+            .tickValues(tArray.sort())
+          yAxis = d3.axisLeft(yRange)
+            .tickValues(vArray.sort())
+
+          chart.append('svg:g').attr('class', 'x axis').attr('transform', 'translate(0,480)').call(xAxis)
+          chart.append('svg:g').attr('class', 'y axis').attr('transform', 'translate(50,0)').call(yAxis)
+        
+          chart.selectAll('rect')
+            .data(dataArray)
+            .enter()
+            .append('rect')
+            .attr('x', (d) ->
+              return xRange(d.timestamp)
+            )
+            .attr('y', (d) ->
+              return yRange(d.value)
+            )
+            .attr('width', xRange.bandwidth())
+            .attr('height', (d) ->
+              return ((500-20) - yRange(d.value))
+            )
+            .attr('fill', 'grey')
+        , 1000
         ###$.getJSON "/metrics.json", {}, (data) ->
         console.log "got metrics : #{data}"
         content = "<ul>"
